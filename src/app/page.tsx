@@ -271,7 +271,7 @@ export default function Home() {
               About Me
             </h2>
             <p className="text-brand-neutral-600 text-lg">
-              Hi, I'm Nadia! With over 5 years of experience in professional makeup artistry, I specialize in creating stunning, personalized looks that highlight your unique beauty. From bridal makeup to photoshoots, I'm passionate about making you look and feel incredible.
+              Hi, I&apos;m Nadia! With over 5 years of experience in professional makeup artistry, I specialize in creating stunning, personalized looks that highlight your unique beauty. From bridal makeup to photoshoots, I&apos;m passionate about making you look and feel incredible.
             </p>
             <p className="text-brand-neutral-600 text-lg">
               My approach is all about understanding your vision and bringing it to life with precision and creativity.
