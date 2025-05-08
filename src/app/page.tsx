@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import Header from "@/components/header";
 import { TikTokEmbed } from "react-social-media-embed";
-import { FaPhone, FaEnvelope, FaTiktok, FaInstagram } from "react-icons/fa";
+import { FaPhone, FaEnvelope } from "react-icons/fa";
 
 // Form Validation Schema
 const ConsultationSchema = z.object({
@@ -338,10 +338,10 @@ export default function Home() {
         <div className="container max-w-screen-xl mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-brand-neutral-900 font-bold text-4xl md:text-5xl font-nadi mb-4">
-              Contact  Me
+              Contact Me
             </h2>
             <p className="text-brand-neutral-600 max-w-2xl mx-auto text-lg">
-              Ready to discuss your makeup goals? Let's connect!
+              Ready to discuss your makeup goals? Let&apos;s connect!
             </p>
           </div>
 
