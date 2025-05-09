@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { FaBars } from 'react-icons/fa';
 import { MobileMenu } from './MobileMenu';
 
@@ -47,10 +48,13 @@ export default function Header({
             </button>
             
             <div className="flex items-center gap-4">
-              <img 
+              <Image 
                 src="/logo.jpeg" 
                 alt="Makeup by Nadia Logo" 
+                width={64}
+                height={64}
                 className="w-16 h-16 rounded-full object-cover"
+                priority
               />
               <div className="flex flex-col">
                 <h1 className="text-lg sm:text-2xl font-bold text-brand-neutral-900 font-nadi">

@@ -1,7 +1,8 @@
 "use client";
 
-import Header from "@/components/header";
-import ConsultationForm from "@/components/ConsultationForm";
+import Header from '@/components/header';
+import ConsultationForm from '@/components/ConsultationForm';
+import Image from 'next/image';
 import { TikTokEmbed } from "react-social-media-embed";
 import { FaPhone, FaEnvelope } from "react-icons/fa";
 
@@ -63,10 +64,13 @@ export default function Home() {
             </div>
 
             <div className="w-full max-w-md">
-              <img 
+              <Image 
                 src="https://media.istockphoto.com/id/1072376428/photo/model-getting-a-touch-up.jpg?s=612x612&w=0&k=20&c=UBiku_BkAGwi5i7r-HD3Y4WbEZvbg3az7X71obVg6_E=" 
                 alt="Nadia - Professional Makeup Artist" 
+                width={800}
+                height={600}
                 className="w-96 h-96 rounded-full shadow-elegant object-cover"
+                priority
               />
             </div>
           </main>
@@ -76,10 +80,13 @@ export default function Home() {
       <section id="about" className="py-16 bg-brand-pink-50">
         <div className="container max-w-screen-xl mx-auto px-4 flex flex-col lg:flex-row items-center space-y-10 lg:space-y-0 lg:space-x-16">
           <div className="w-full lg:w-1/2">
-              <img 
+              <Image 
                 src="https://img.freepik.com/premium-photo/makeup-artist-smiling-throwing-up-brushes-tools_73169-414.jpg" 
                 alt="Nadia - Professional Makeup Artist" 
+                width={800}
+                height={600}
                 className="w-full h-auto rounded-xl shadow-elegant object-cover"
+                priority
               />
           </div>
           <div className="w-full lg:w-1/2 space-y-6">
@@ -136,10 +143,13 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {servicesType.map((service, index) => (
               <div key={index} className="bg-white p-6 rounded-xl shadow-elegant text-center">
-                <img 
+                <Image 
                   src={service.icon} 
                   alt={service.title} 
+                  width={96}
+                  height={96}
                   className="mx-auto mb-4 w-24 h-24 object-cover rounded-full"
+                  unoptimized
                 />
                 <h3 className="text-brand-neutral-900 font-bold text-xl mb-2">
                   {service.title}
