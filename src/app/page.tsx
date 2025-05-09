@@ -5,6 +5,7 @@ import ConsultationForm from '@/components/ConsultationForm';
 import Image from 'next/image';
 import { TikTokEmbed } from "react-social-media-embed";
 import { FaPhone, FaEnvelope } from "react-icons/fa";
+// Metadata now handled in layout.tsx
 
 
 const tiktTokVids = [
@@ -31,10 +32,50 @@ const servicesType = [
 ];
 // Define the Home component
 export default function Home() {
+  const schemaMarkup = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    'name': 'Makeup by Nadia',
+    'description': 'Professional makeup services specializing in bridal, event, and photoshoot makeup',
+    'image': 'https://makeupbynadia.com/logo.jpeg',
+    'url': 'https://makeupbynadia.com',
+    'telephone': '+1-XXX-XXX-XXXX', // Replace with actual phone number
+    'address': {
+      '@type': 'PostalAddress',
+      'addressLocality': 'Your City',
+      'addressRegion': 'Your State',
+      'postalCode': 'Your Zip',
+      'addressCountry': 'US'
+    },
+    'geo': {
+      '@type': 'GeoCoordinates',
+      'latitude': 0, // Replace with actual latitude
+      'longitude': 0 // Replace with actual longitude
+    },
+    'openingHoursSpecification': {
+      '@type': 'OpeningHoursSpecification',
+      'dayOfWeek': [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday'
+      ],
+      'opens': '09:00',
+      'closes': '18:00'
+    }
+  };
 
 
   return (
     <div className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(schemaMarkup)
+        }}
+      />
       <section key="hero" className="py-2">
         <div className="container max-w-screen-xl mx-auto px-4">
           <Header className="mb-24" />

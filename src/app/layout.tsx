@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+import { baseMetadata } from './metadata';
 import "./globals.css";
 
 const geistSans = Montserrat({
@@ -13,8 +14,7 @@ const geistMono = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Makeup by Nadia",
-  description: "Professional Makeup Artistry by Nadia",
+  ...baseMetadata,
   icons: {
     icon: [
       { url: '/favicon/favicon-circular-16x16.png', sizes: '16x16', type: 'image/png' },
