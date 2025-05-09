@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 
 export const baseMetadata: Metadata = {
+  metadataBase: new URL('https://makeupbynadia.com'),
   title: {
     default: 'Makeup by Nadia - Professional Makeup Artist',
     template: '%s | Makeup by Nadia'
