@@ -12,7 +12,9 @@ export const baseMetadata: Metadata = {
     'bridal makeup', 
     'event makeup', 
     'photoshoot makeup', 
-    'professional makeup services'
+    'professional makeup services',
+    'ethiopia',
+    'addis ababa'
   ],
   openGraph: {
     title: 'Makeup by Nadia - Professional Makeup Artist',

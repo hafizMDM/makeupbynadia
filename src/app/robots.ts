@@ -6,12 +6,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: [
-          '/',
-          '/api/contact'
+          '/'
         ],
         disallow: [
           '/private/',
           '/admin/',
+          '/api/',
           '/*.json$',
           '/*.xml$'
         ]
@@ -19,23 +19,23 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: 'Googlebot',
         allow: [
-          '/',
-          '/api/contact'
+          '/'
         ],
         disallow: [
           '/private/',
-          '/admin/'
+          '/admin/',
+          '/api/'
         ]
       },
       {
         userAgent: 'Bingbot',
         allow: [
-          '/',
-          '/api/contact'
+          '/'
         ],
         disallow: [
           '/private/',
-          '/admin/'
+          '/admin/',
+          '/api/'
         ]
       }
     ],
