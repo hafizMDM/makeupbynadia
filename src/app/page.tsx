@@ -91,7 +91,7 @@ export default function Home() {
               <div className="flex justify-center lg:justify-start space-x-4">
                 <a 
                   href="#contact" 
-                  className="bg-brand-pink-500 text-white px-6 py-3 rounded-lg hover:bg-brand-pink-600 transition-colors font-semibold"
+                  className="bg-brand-pink-600 text-white px-6 py-3 rounded-lg hover:bg-brand-pink-500 transition-colors font-semibold"
                 >
                   Book Consultation
                 </a>
