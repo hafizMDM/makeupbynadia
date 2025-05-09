@@ -1,220 +1,36 @@
 "use client";
 
-import { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-
 import Header from "@/components/header";
+import ConsultationForm from "@/components/ConsultationForm";
 import { TikTokEmbed } from "react-social-media-embed";
 import { FaPhone, FaEnvelope } from "react-icons/fa";
 
-// Form Validation Schema
-const ConsultationSchema = z.object({
-  firstName: z.string().min(2, { message: 'First name is required' }),
-  lastName: z.string().min(2, { message: 'Last name is required' }),
-  email: z.string().email({ message: 'Invalid email address' }),
-  serviceType: z.string().min(1, { message: 'Please select a service type' }),
-  message: z.string().optional()
-});
 
-type ConsultationFormInputs = z.infer<typeof ConsultationSchema>;
-
-// Form Error Message Component
-const FormErrorMessage = ({ message }: { message?: string }) => {
-  return message ? (
-    <p className="text-red-500 text-sm mt-1">{message}</p>
-  ) : null;
-};
-
-// Consultation Form Component
-const ConsultationForm = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-
-  const { 
-    register, 
-    handleSubmit, 
-    formState: { errors }, 
-    reset 
-  } = useForm<ConsultationFormInputs>({
-    resolver: zodResolver(ConsultationSchema)
-  });
-
-  const onSubmit: SubmitHandler<ConsultationFormInputs> = async (data) => {
-    setIsSubmitting(true);
-    setSubmitError(null);
-    setSubmitSuccess(false);
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        setSubmitSuccess(true);
-        reset(); // Clear form
-      } else {
-        setSubmitError(result.error || 'Submission failed');
-      }
-    } catch (error) {
-      setSubmitError('Network error. Please try again.');
-      console.error('Form submission error:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <form 
-      className="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-elegant space-y-6"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <div className="grid md:grid-cols-2 gap-4">
-        <div>
-          <label 
-            htmlFor="firstName" 
-            className="block text-brand-neutral-700 font-medium mb-2"
-          >
-            First Name
-          </label>
-          <input 
-            type="text" 
-            id="firstName" 
-            {...register('firstName')}
-            className={`w-full px-4 py-3 border ${errors.firstName ? 'border-red-500' : 'border-brand-pink-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink-400 transition-all`}
-            placeholder="Your first name"
-          />
-          <FormErrorMessage message={errors.firstName?.message} />
-        </div>
-        <div>
-          <label 
-            htmlFor="lastName" 
-            className="block text-brand-neutral-700 font-medium mb-2"
-          >
-            Last Name
-          </label>
-          <input 
-            type="text" 
-            id="lastName" 
-            {...register('lastName')}
-            className={`w-full px-4 py-3 border ${errors.lastName ? 'border-red-500' : 'border-brand-pink-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink-400 transition-all`}
-            placeholder="Your last name"
-          />
-          <FormErrorMessage message={errors.lastName?.message} />
-        </div>
-      </div>
-
-      <div>
-        <label 
-          htmlFor="email" 
-          className="block text-brand-neutral-700 font-medium mb-2"
-        >
-          Email Address
-        </label>
-        <input 
-          type="email" 
-          id="email" 
-          {...register('email')}
-          className={`w-full px-4 py-3 border ${errors.email ? 'border-red-500' : 'border-brand-pink-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink-400 transition-all`}
-          placeholder="you@example.com"
-        />
-        <FormErrorMessage message={errors.email?.message} />
-      </div>
-
-      <div>
-        <label 
-          htmlFor="serviceType" 
-          className="block text-brand-neutral-700 font-medium mb-2"
-        >
-          Service Type
-        </label>
-        <select 
-          id="serviceType" 
-          {...register('serviceType')}
-          className={`w-full px-4 py-3 border ${errors.serviceType ? 'border-red-500' : 'border-brand-pink-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink-400 transition-all`}
-        >
-          <option value="">Select a service</option>
-          <option value="bridal">Bridal Makeup</option>
-          <option value="evening">Evening Glam</option>
-          <option value="photoshoot">Dramatic Transformation</option>
-          <option value="other">Other</option>
-        </select>
-        <FormErrorMessage message={errors.serviceType?.message} />
-      </div>
-
-      <div>
-        <label 
-          htmlFor="message" 
-          className="block text-brand-neutral-700 font-medium mb-2"
-        >
-          Additional Details
-        </label>
-        <textarea 
-          id="message" 
-          {...register('message')}
-          rows={4} 
-          className="w-full px-4 py-3 border border-brand-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-pink-400 transition-all"
-          placeholder="Tell me about your makeup goals..."
-        ></textarea>
-      </div>
-
-      <div>
-        {submitError && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-            {submitError}
-          </div>
-        )}
-
-        {submitSuccess && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-            Consultation request submitted successfully!
-          </div>
-        )}
-
-        <button 
-          type="submit" 
-          disabled={isSubmitting}
-          className={`w-full ${isSubmitting ? 'bg-brand-pink-300' : 'bg-brand-pink-500'} text-white py-4 rounded-lg hover:bg-brand-pink-600 transition-colors duration-300 font-semibold text-lg shadow-soft-pink`}
-        >
-          {isSubmitting ? 'Submitting...' : 'Book Consultation'}
-        </button>
-      </div>
-    </form>
-  );
-};
-
+const tiktTokVids = [
+  "https://www.tiktok.com/@makeupbynadia_/photo/7461728757754350854",
+  "https://www.tiktok.com/@makeupbynadia_/photo/7461998927731166470",
+  "https://www.tiktok.com/@makeupbynadia_/video/7475664846156041478",
+];
+const servicesType = [
+  {
+    icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXmv-hrI2f7wK3y_ZpXv3t-LEgjlwn-il5YBEZK-SuMKVOTbD-c3lU2sru6urmH8PqmQc&usqp=CAU",
+    title: "Bridal Makeup",
+    description: "Transform your wedding day look with our expert bridal makeup services, ensuring you shine on your most special day."
+  },
+  {
+    icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXmv-hrI2f7wK3y_ZpXv3t-LEgjlwn-il5YBEZK-SuMKVOTbD-c3lU2sru6urmH8PqmQc&usqp=CAU",
+    title: "Evening Glam",
+    description: "Elevate your evening with a stunning, sophisticated makeup look that turns heads and boosts confidence."
+  },
+  {
+    icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXmv-hrI2f7wK3y_ZpXv3t-LEgjlwn-il5YBEZK-SuMKVOTbD-c3lU2sru6urmH8PqmQc&usqp=CAU",
+    title: "Dramatic Transformation",
+    description: "Create a bold, artistic makeup look perfect for photoshoots, special events, or making a statement."
+  }
+];
+// Define the Home component
 export default function Home() {
-  const tiktTokVids = [
-    "https://www.tiktok.com/@makeupbynadia_/photo/7461728757754350854",
-    "https://www.tiktok.com/@makeupbynadia_/photo/7461998927731166470",
-    "https://www.tiktok.com/@makeupbynadia_/video/7475664846156041478",
-  ];
 
-  const services = [
-    {
-      icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXmv-hrI2f7wK3y_ZpXv3t-LEgjlwn-il5YBEZK-SuMKVOTbD-c3lU2sru6urmH8PqmQc&usqp=CAU",
-      title: "Bridal Makeup",
-      description: "Transform your wedding day look with our expert bridal makeup services, ensuring you shine on your most special day."
-    },
-    {
-      icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXmv-hrI2f7wK3y_ZpXv3t-LEgjlwn-il5YBEZK-SuMKVOTbD-c3lU2sru6urmH8PqmQc&usqp=CAU",
-      title: "Evening Glam",
-      description: "Elevate your evening with a stunning, sophisticated makeup look that turns heads and boosts confidence."
-    },
-    {
-      icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXmv-hrI2f7wK3y_ZpXv3t-LEgjlwn-il5YBEZK-SuMKVOTbD-c3lU2sru6urmH8PqmQc&usqp=CAU",
-      title: "Dramatic Transformation",
-      description: "Create a bold, artistic makeup look perfect for photoshoots, special events, or making a statement."
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-white">
@@ -248,7 +64,7 @@ export default function Home() {
 
             <div className="w-full max-w-md">
               <img 
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXmv-hrI2f7wK3y_ZpXv3t-LEgjlwn-il5YBEZK-SuMKVOTbD-c3lU2sru6urmH8PqmQc&usqp=CAU" 
+                src="https://media.istockphoto.com/id/1072376428/photo/model-getting-a-touch-up.jpg?s=612x612&w=0&k=20&c=UBiku_BkAGwi5i7r-HD3Y4WbEZvbg3az7X71obVg6_E=" 
                 alt="Nadia - Professional Makeup Artist" 
                 className="w-96 h-96 rounded-full shadow-elegant object-cover"
               />
@@ -261,7 +77,7 @@ export default function Home() {
         <div className="container max-w-screen-xl mx-auto px-4 flex flex-col lg:flex-row items-center space-y-10 lg:space-y-0 lg:space-x-16">
           <div className="w-full lg:w-1/2">
               <img 
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXmv-hrI2f7wK3y_ZpXv3t-LEgjlwn-il5YBEZK-SuMKVOTbD-c3lU2sru6urmH8PqmQc&usqp=CAU" 
+                src="https://img.freepik.com/premium-photo/makeup-artist-smiling-throwing-up-brushes-tools_73169-414.jpg" 
                 alt="Nadia - Professional Makeup Artist" 
                 className="w-full h-auto rounded-xl shadow-elegant object-cover"
               />
@@ -290,16 +106,19 @@ export default function Home() {
               A glimpse into the transformative power of makeup
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {tiktTokVids.map((url, index) => (
-              <TikTokEmbed
-                key={index}
-                url={url}
-                width={325}
-                height={560}
-                className="bg-transparent"
-              />
-            ))}
+       
+       <div className='flex items-center justify-center'>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {tiktTokVids.map((url, index) => (
+                <TikTokEmbed
+                  key={index}
+                  url={url}
+                  width={325}
+                  height={560}
+                  className="bg-transparent"
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -315,7 +134,7 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {services.map((service, index) => (
+            {servicesType.map((service, index) => (
               <div key={index} className="bg-white p-6 rounded-xl shadow-elegant text-center">
                 <img 
                   src={service.icon} 
