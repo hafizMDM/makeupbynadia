@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { baseMetadata } from './metadata';
+import "./critical.css";
 import "./globals.css";
 
 const geistSans = Montserrat({
@@ -32,9 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased w-full mx-auto`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>

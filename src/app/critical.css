@@ -1,0 +1,46 @@
+/* Critical CSS for above-the-fold content */
+:root {
+  --font-primary: 'Montserrat', sans-serif;
+}
+
+body {
+  font-family: var(--font-primary);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  background-color: #f4f4f4;
+}
+
+.hero-content {
+  max-width: 800px;
+  text-align: center;
+  padding: 1rem;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Minimal responsive styles */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+}
