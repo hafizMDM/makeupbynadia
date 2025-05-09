@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo 'Running pre-commit checks...'
+
+# Attempt to build the application
+npm run build
+
+# Check the build status
+BUILD_STATUS=$?
+
+if [ $BUILD_STATUS -ne 0 ]; then
+  echo 'Build failed. Commit aborted.'
+  exit 1
+fi
+
+echo 'Checks passed. Proceeding with commit.'
+exit 0

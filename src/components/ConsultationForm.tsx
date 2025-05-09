@@ -66,6 +66,7 @@ export default function ConsultationForm() {
         const errorData = await response.json();
         setSubmitError(errorData.message || 'An error occurred');
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setSubmitError('Network error. Please try again.');
     } finally {
